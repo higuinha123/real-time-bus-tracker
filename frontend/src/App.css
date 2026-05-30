@@ -55,3 +55,31 @@
   width: 100%;
   height: 100%;
 }
+
+.user-box {
+  background: #1f2937;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.user-box p {
+  font-size: 14px;
+  color: #d1d5db;
+  margin-top: 5px;
+}
+
+.user-box button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.user-box button:hover {
+  background: #b91c1c;
+}

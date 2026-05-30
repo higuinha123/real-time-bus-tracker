@@ -1,25 +1,15 @@
-//crud bus 
-
 const express = require("express");
-
 const buses = require("../data/buses");
-const { authMiddleware, adminMiddleware } = require("../middlewares/authMiddleware");
+
+const {
+  authMiddleware,
+  adminMiddleware
+} = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.get("/", authMiddleware, (req, res) => {
   res.json(buses);
-});
-
-router.get("/:id", authMiddleware, (req, res) => {
-  const id = Number(req.params.id);
-  const bus = buses.find((bus) => bus.id === id);
-
-  if (!bus) {
-    return res.status(404).json({ message: "Ônibus não encontrado." });
-  }
-
-  res.json(bus);
 });
 
 router.post("/", authMiddleware, adminMiddleware, (req, res) => {

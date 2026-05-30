@@ -1,3 +1,5 @@
+const busRoutes = require("./routes/busRoutes");
+const lineRoutes = require("./routes/lineRoutes");
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
@@ -7,8 +9,6 @@ const buses = require("./data/buses");
 const stops = require("./data/stops");
 
 const authRoutes = require("./routes/authRoutes");
-const busRoutes = require("./routes/busRoutes");
-const lineRoutes = require("./routes/lineRoutes");
 
 const app = express();
 const server = http.createServer(app);

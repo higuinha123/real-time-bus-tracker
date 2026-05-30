@@ -1,25 +1,15 @@
-//crud linha 
-
 const express = require("express");
-
 const lines = require("../data/lines");
-const { authMiddleware, adminMiddleware } = require("../middlewares/authMiddleware");
+
+const {
+  authMiddleware,
+  adminMiddleware
+} = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.get("/", authMiddleware, (req, res) => {
   res.json(lines);
-});
-
-router.get("/:id", authMiddleware, (req, res) => {
-  const id = Number(req.params.id);
-  const line = lines.find((line) => line.id === id);
-
-  if (!line) {
-    return res.status(404).json({ message: "Linha não encontrada." });
-  }
-
-  res.json(line);
 });
 
 router.post("/", authMiddleware, adminMiddleware, (req, res) => {

@@ -1,9 +1,15 @@
-function Sidebar({ buses, selectedLine, setSelectedLine }) {
+function Sidebar({ buses, selectedLine, setSelectedLine, user, onLogout }) {
   const lines = ["Todas", ...new Set(buses.map((bus) => bus.line))];
 
   return (
     <aside className="sidebar">
       <h2>Bus Tracker</h2>
+
+      <div className="user-box">
+        <strong>{user.name}</strong>
+        <p>{user.role === "admin" ? "Administrador" : "Usuário comum"}</p>
+        <button onClick={onLogout}>Sair</button>
+      </div>
 
       <label>Filtrar por linha:</label>
 
