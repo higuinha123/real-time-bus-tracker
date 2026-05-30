@@ -83,3 +83,28 @@
 .user-box button:hover {
   background: #b91c1c;
 }
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sidebar-menu button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #374151;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sidebar-menu button:hover {
+  background: #4b5563;
+}
+
+.sidebar-menu button.active {
+  background: #2563eb;
+}

@@ -4,6 +4,9 @@ import socket from "./services/socket";
 import MapView from "./components/MapView";
 import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login";
+import LinesPage from "./pages/LinesPage";
+import BusesPage from "./pages/BusesPage";
+import DashboardPage from "./pages/DashboardPage";
 import "./App.css";
 
 function App() {
@@ -11,6 +14,7 @@ function App() {
   const [stops, setStops] = useState([]);
   const [selectedLine, setSelectedLine] = useState("Todas");
   const [user, setUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState("dashboard");
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -62,10 +66,20 @@ function App() {
         setSelectedLine={setSelectedLine}
         user={user}
         onLogout={handleLogout}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
 
       <main className="map-container">
+        {currentPage === "dashboard" && <DashboardPage />}
+
+        {currentPage === "map" && (
         <MapView buses={filteredBuses} stops={stops} />
+        )}
+
+        {currentPage === "lines" && <LinesPage />}
+
+        {currentPage === "buses" && <BusesPage />}
       </main>
     </div>
   );
