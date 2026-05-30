@@ -1,150 +1,84 @@
 .lines-page {
-  padding: 24px;
+  padding: 28px;
   background: #f3f4f6;
   min-height: 100vh;
   overflow-y: auto;
 }
 
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.page-header h1 {
-  color: #111827;
-  margin-bottom: 6px;
-}
-
-.page-header p {
-  color: #6b7280;
-}
-
-.message {
-  background: #dbeafe;
-  color: #1e40af;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
 .line-form {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 22px;
+  border-radius: 18px;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
 }
 
 .line-form h2 {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   color: #111827;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 14px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-  font-weight: bold;
-  margin-bottom: 6px;
+  font-weight: 800;
+  margin-bottom: 7px;
   color: #374151;
+  font-size: 14px;
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #d1d5db;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 90px;
 }
 
 .form-actions {
   display: flex;
   gap: 10px;
+  margin-top: 5px;
 }
 
 .form-actions button {
-  padding: 10px 16px;
+  padding: 11px 17px;
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 11px;
   cursor: pointer;
+  font-weight: 800;
+  transition: 0.2s;
 }
 
 .form-actions button:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
 .form-actions .cancel-btn {
-  background: #6b7280;
+  background: #64748b;
 }
 
 .form-actions .cancel-btn:hover {
-  background: #4b5563;
-}
-
-.table-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.table-card h2 {
-  margin-bottom: 16px;
-  color: #111827;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
-  text-align: left;
-}
-
-th {
-  background: #f9fafb;
-  color: #374151;
-}
-
-.edit-btn {
-  padding: 8px 10px;
-  margin-right: 8px;
-  background: #f59e0b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.delete-btn {
-  padding: 8px 10px;
-  background: #dc2626;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.edit-btn:hover {
-  background: #d97706;
-}
-
-.delete-btn:hover {
-  background: #b91c1c;
+  background: #475569;
 }

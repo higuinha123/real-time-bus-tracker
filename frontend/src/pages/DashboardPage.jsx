@@ -26,7 +26,6 @@ function DashboardPage() {
 
   const totalBuses = buses.length;
   const totalLines = lines.length;
-
   const emptyBuses = buses.filter((bus) => bus.occupancy === "Vazio").length;
   const normalBuses = buses.filter((bus) => bus.occupancy === "Normal").length;
   const fullBuses = buses.filter((bus) => bus.occupancy === "Cheio").length;
@@ -36,7 +35,7 @@ function DashboardPage() {
       <div className="page-header">
         <div>
           <h1>Dashboard</h1>
-          <p>Resumo geral do sistema de rastreamento.</p>
+          <p>Visão geral do sistema de rastreamento em tempo real.</p>
         </div>
       </div>
 
@@ -44,27 +43,27 @@ function DashboardPage() {
 
       <div className="dashboard-grid">
         <div className="dashboard-card">
-          <span>Total de ônibus</span>
+          <span>Ônibus cadastrados</span>
           <strong>{totalBuses}</strong>
         </div>
 
         <div className="dashboard-card">
-          <span>Total de linhas</span>
+          <span>Linhas cadastradas</span>
           <strong>{totalLines}</strong>
         </div>
 
         <div className="dashboard-card">
-          <span>Ônibus vazios</span>
+          <span>Vazios</span>
           <strong>{emptyBuses}</strong>
         </div>
 
         <div className="dashboard-card">
-          <span>Ônibus normais</span>
+          <span>Normais</span>
           <strong>{normalBuses}</strong>
         </div>
 
         <div className="dashboard-card">
-          <span>Ônibus cheios</span>
+          <span>Cheios</span>
           <strong>{fullBuses}</strong>
         </div>
       </div>

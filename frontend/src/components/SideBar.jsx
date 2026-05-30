@@ -11,12 +11,12 @@ function Sidebar({
 
   return (
     <aside className="sidebar">
-      <h2>Bus Tracker</h2>
+      <h2>🚌 Bus Tracker</h2>
 
       <div className="user-box">
         <strong>{user.name}</strong>
         <p>{user.role === "admin" ? "Administrador" : "Usuário comum"}</p>
-        <button onClick={onLogout}>Sair</button>
+        <button onClick={onLogout}>Sair da conta</button>
       </div>
 
       <nav className="sidebar-menu">
@@ -25,7 +25,7 @@ function Sidebar({
             className={currentPage === "dashboard" ? "active" : ""}
             onClick={() => setCurrentPage("dashboard")}
           >
-            Dashboard
+            📊 Dashboard
           </button>
         )}
 
@@ -33,7 +33,7 @@ function Sidebar({
           className={currentPage === "map" ? "active" : ""}
           onClick={() => setCurrentPage("map")}
         >
-          Mapa
+          🗺️ Mapa em tempo real
         </button>
 
         {user.role === "admin" && (
@@ -42,14 +42,14 @@ function Sidebar({
               className={currentPage === "lines" ? "active" : ""}
               onClick={() => setCurrentPage("lines")}
             >
-              Linhas
+              🧭 Linhas
             </button>
 
             <button
               className={currentPage === "buses" ? "active" : ""}
               onClick={() => setCurrentPage("buses")}
             >
-              Ônibus
+              🚍 Ônibus
             </button>
           </>
         )}
@@ -57,7 +57,7 @@ function Sidebar({
 
       {currentPage === "map" && (
         <>
-          <label>Filtrar por linha:</label>
+          <label>Filtrar por linha</label>
 
           <select
             value={selectedLine}

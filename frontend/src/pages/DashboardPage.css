@@ -1,70 +1,63 @@
 .dashboard-page {
-  padding: 24px;
+  padding: 28px;
   background: #f3f4f6;
   min-height: 100vh;
   overflow-y: auto;
 }
 
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.page-header h1 {
-  color: #111827;
-  margin-bottom: 6px;
-}
-
-.page-header p {
-  color: #6b7280;
-}
-
-.message {
-  background: #dbeafe;
-  color: #1e40af;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  gap: 18px;
   margin-bottom: 28px;
 }
 
 .dashboard-card {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 22px;
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: rgba(37, 99, 235, 0.1);
+  border-radius: 999px;
+  right: -25px;
+  top: -25px;
 }
 
 .dashboard-card span {
-  color: #6b7280;
+  color: #64748b;
   font-size: 14px;
+  font-weight: 700;
 }
 
 .dashboard-card strong {
-  color: #111827;
-  font-size: 32px;
+  color: #0f172a;
+  font-size: 36px;
+  letter-spacing: -1px;
 }
 
 .dashboard-section {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
 }
 
 .dashboard-section h2 {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   color: #111827;
 }
 
@@ -79,7 +72,7 @@
 
 .dashboard-table-card th,
 .dashboard-table-card td {
-  padding: 12px;
+  padding: 14px 12px;
   border-bottom: 1px solid #e5e7eb;
   text-align: left;
 }
@@ -89,13 +82,13 @@
   color: #374151;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
