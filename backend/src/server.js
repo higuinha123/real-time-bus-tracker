@@ -1,24 +1,22 @@
-const busRoutes = require("./routes/busRoutes");
-const lineRoutes = require("./routes/lineRoutes");
+const driverRoutes = require("./routes/driverRoutes");
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 
-const buses = require("./data/buses");
-const stops = require("./data/stops");
+const prisma = require("./prismaClient");
 
 const authRoutes = require("./routes/authRoutes");
+const busRoutes = require("./routes/busRoutes");
+const lineRoutes = require("./routes/lineRoutes");
+const stopRoutes = require("./routes/stopRoutes");
+
 
 const app = express();
 const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/auth", authRoutes);
-app.use("/api/buses", busRoutes);
-app.use("/api/lines", lineRoutes);
 
 const io = new Server(server, {
   cors: {
@@ -27,34 +25,54 @@ const io = new Server(server, {
   }
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/buses", busRoutes);
+app.use("/api/lines", lineRoutes);
+app.use("/api/drivers", driverRoutes);
+app.use("/api/stops", stopRoutes);
+
 app.get("/", (req, res) => {
   res.send("API do Bus Tracker funcionando!");
 });
 
-app.get("/api/stops", (req, res) => {
-  res.json(stops);
-});
-
-function moveBuses() {
-  buses.forEach((bus) => {
-    bus.lat += (Math.random() - 0.5) * 0.001;
-    bus.lng += (Math.random() - 0.5) * 0.001;
-  });
-
-  io.emit("busLocationUpdate", buses);
-}
-
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("Cliente conectado:", socket.id);
 
-  socket.emit("busLocationUpdate", buses);
+  try {
+    const buses = await prisma.bus.findMany({
+      include: {
+        line: true,
+        driver: true
+      },
+      orderBy: {
+        id: "asc"
+      }
+    });
+
+    const formattedBuses = buses.map((bus) => ({
+      id: bus.id,
+      lineId: bus.lineId,
+      driverId: bus.driverId,
+      line: bus.lineName,
+      plate: bus.plate,
+      lat: bus.lat,
+      lng: bus.lng,
+      occupancy: bus.occupancy,
+      nextStop: bus.nextStop,
+      operationalStatus: bus.operationalStatus,
+      driver: bus.driver,
+      busLine: bus.line
+    }));
+
+    socket.emit("busLocationUpdate", formattedBuses);
+  } catch (error) {
+    console.error("Erro ao enviar ônibus pelo socket:", error);
+  }
 
   socket.on("disconnect", () => {
     console.log("Cliente desconectado:", socket.id);
   });
 });
-
-setInterval(moveBuses, 2000);
 
 const PORT = 3001;
 

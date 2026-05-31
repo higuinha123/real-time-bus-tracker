@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+}
+
+model BusLine {
+  id          Int      @id @default(autoincrement())
+  code        String
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+
+  buses       Bus[]
+  stops       BusStop[]
+}
+
+model Bus {
+  id                Int      @id @default(autoincrement())
+  plate             String   @unique
+  lineName          String
+  lat               Float
+  lng               Float
+  occupancy         String   @default("Normal")
+  nextStop          String
+  operationalStatus String   @default("Em operação")
+  createdAt         DateTime @default(now())
+
+  lineId            Int
+  line              BusLine  @relation(fields: [lineId], references: [id])
+
+  driverId          Int?
+  driver            Driver?  @relation(fields: [driverId], references: [id])
+
+  locations         LocationHistory[]
+}
+
+model Driver {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  license   String
+  status    String   @default("Ativo")
+  createdAt DateTime @default(now())
+
+  buses     Bus[]
+}
+
+model BusStop {
+  id        Int      @id @default(autoincrement())
+  name      String
+  lat       Float
+  lng       Float
+  createdAt DateTime @default(now())
+
+  lineId    Int?
+  line      BusLine? @relation(fields: [lineId], references: [id])
+}
+
+model LocationHistory {
+  id        Int      @id @default(autoincrement())
+  lat       Float
+  lng       Float
+  occupancy String?
+  createdAt DateTime @default(now())
+
+  busId     Int
+  bus       Bus      @relation(fields: [busId], references: [id])
+}
