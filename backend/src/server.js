@@ -1,4 +1,3 @@
-const driverRoutes = require("./routes/driverRoutes");
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
@@ -9,8 +8,10 @@ const prisma = require("./prismaClient");
 const authRoutes = require("./routes/authRoutes");
 const busRoutes = require("./routes/busRoutes");
 const lineRoutes = require("./routes/lineRoutes");
+const driverRoutes = require("./routes/driverRoutes");
 const stopRoutes = require("./routes/stopRoutes");
-
+const createSimulationRoutes = require("./routes/simulationRoutes");
+const createLocationRoutes = require("./routes/locationRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -25,11 +26,30 @@ const io = new Server(server, {
   }
 });
 
+function formatBus(bus) {
+  return {
+    id: bus.id,
+    lineId: bus.lineId,
+    driverId: bus.driverId,
+    line: bus.lineName,
+    plate: bus.plate,
+    lat: bus.lat,
+    lng: bus.lng,
+    occupancy: bus.occupancy,
+    nextStop: bus.nextStop,
+    operationalStatus: bus.operationalStatus,
+    driver: bus.driver,
+    busLine: bus.line
+  };
+}
+
 app.use("/api/auth", authRoutes);
 app.use("/api/buses", busRoutes);
 app.use("/api/lines", lineRoutes);
 app.use("/api/drivers", driverRoutes);
 app.use("/api/stops", stopRoutes);
+app.use("/api/simulation", createSimulationRoutes(io));
+app.use("/api/location", createLocationRoutes(io));
 
 app.get("/", (req, res) => {
   res.send("API do Bus Tracker funcionando!");
@@ -49,22 +69,7 @@ io.on("connection", async (socket) => {
       }
     });
 
-    const formattedBuses = buses.map((bus) => ({
-      id: bus.id,
-      lineId: bus.lineId,
-      driverId: bus.driverId,
-      line: bus.lineName,
-      plate: bus.plate,
-      lat: bus.lat,
-      lng: bus.lng,
-      occupancy: bus.occupancy,
-      nextStop: bus.nextStop,
-      operationalStatus: bus.operationalStatus,
-      driver: bus.driver,
-      busLine: bus.line
-    }));
-
-    socket.emit("busLocationUpdate", formattedBuses);
+    socket.emit("busLocationUpdate", buses.map(formatBus));
   } catch (error) {
     console.error("Erro ao enviar ônibus pelo socket:", error);
   }

@@ -146,7 +146,8 @@ body {
   flex: 1;
   min-width: 0;
   background: #f3f4f6;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .map {
@@ -263,4 +264,78 @@ td {
   .map-container {
     height: 55vh;
   }
+}
+
+/* Correção global de campos */
+input,
+textarea,
+select {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+option {
+  color: #111827;
+  background-color: #ffffff;
+}
+
+/* Correção dos badges/status */
+.occupancy,
+.driver-status {
+  display: inline-block;
+  color: inherit;
+}
+
+/* Status dos ônibus */
+.occupancy.vazio {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.occupancy.normal {
+  background: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+.occupancy.cheio {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+/* Status dos motoristas */
+.driver-status.ativo {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.driver-status.afastado {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.driver-status.inativo {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+}
+.message.success {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.message.error {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  border: 1px solid #fecaca !important;
+}
+
+.message.info {
+  background: #dbeafe !important;
+  color: #1e40af !important;
+  border: 1px solid #bfdbfe !important;
 }

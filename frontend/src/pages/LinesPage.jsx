@@ -9,6 +9,7 @@ function LinesPage() {
   const [description, setDescription] = useState("");
   const [editingLineId, setEditingLineId] = useState(null);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("info");
 
   async function loadLines() {
     try {
@@ -16,7 +17,7 @@ function LinesPage() {
       setLines(response.data);
     } catch (error) {
       console.error("Erro ao carregar linhas:", error);
-      setMessage("Erro ao carregar linhas.");
+      showMessage("Erro ao carregar linhas.", "error");
     }
   }
 
@@ -24,29 +25,75 @@ function LinesPage() {
     loadLines();
   }, []);
 
+  function showMessage(text, type = "info") {
+    setMessage(text);
+    setMessageType(type);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 4000);
+  }
+
+  function formatCode(value) {
+    return value.replace(/\D/g, "").slice(0, 3);
+  }
+
+  function validateForm() {
+    const codeRegex = /^\d{3}$/;
+    const onlyLetters = /^[A-Za-zÀ-ÿ\s]+$/;
+
+    if (!codeRegex.test(code)) {
+      return "O código da linha deve ter exatamente 3 números. Exemplo: 070.";
+    }
+
+    if (name.trim().length < 3) {
+      return "O nome da linha precisa ter pelo menos 3 letras.";
+    }
+
+    if (!onlyLetters.test(name.trim())) {
+      return "O nome da linha deve conter apenas letras e espaços.";
+    }
+
+    if (description.trim().length < 5) {
+      return "A descrição precisa ter pelo menos 5 caracteres.";
+    }
+
+    return null;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const validationError = validateForm();
+
+    if (validationError) {
+      showMessage(validationError, "error");
+      return;
+    }
+
     const lineData = {
       code,
-      name,
-      description
+      name: name.trim(),
+      description: description.trim()
     };
 
     try {
       if (editingLineId) {
         await api.put(`/lines/${editingLineId}`, lineData);
-        setMessage("Linha atualizada com sucesso!");
+        showMessage("Linha atualizada com sucesso!", "success");
       } else {
         await api.post("/lines", lineData);
-        setMessage("Linha criada com sucesso!");
+        showMessage("Linha criada com sucesso!", "success");
       }
 
       clearForm();
-      loadLines();
+      await loadLines();
     } catch (error) {
       console.error("Erro ao salvar linha:", error);
-      setMessage("Erro ao salvar linha.");
+      showMessage(
+        error.response?.data?.message || "Erro ao salvar linha.",
+        "error"
+      );
     }
   }
 
@@ -55,6 +102,7 @@ function LinesPage() {
     setCode(line.code);
     setName(line.name);
     setDescription(line.description);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   async function handleDelete(id) {
@@ -66,11 +114,14 @@ function LinesPage() {
 
     try {
       await api.delete(`/lines/${id}`);
-      setMessage("Linha excluída com sucesso!");
-      loadLines();
+      showMessage("Linha excluída com sucesso!", "success");
+      await loadLines();
     } catch (error) {
       console.error("Erro ao excluir linha:", error);
-      setMessage("Erro ao excluir linha.");
+      showMessage(
+        error.response?.data?.message || "Erro ao excluir linha.",
+        "error"
+      );
     }
   }
 
@@ -90,7 +141,7 @@ function LinesPage() {
         </div>
       </div>
 
-      {message && <div className="message">{message}</div>}
+      {message && <div className={`message ${messageType}`}>{message}</div>}
 
       <form className="line-form" onSubmit={handleSubmit}>
         <h2>{editingLineId ? "Editar Linha" : "Nova Linha"}</h2>
@@ -101,7 +152,8 @@ function LinesPage() {
             type="text"
             placeholder="Ex: 070"
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(e) => setCode(formatCode(e.target.value))}
+            maxLength="3"
             required
           />
         </div>
@@ -113,6 +165,7 @@ function LinesPage() {
             placeholder="Ex: General Osório"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            minLength="3"
             required
           />
         </div>
@@ -123,6 +176,7 @@ function LinesPage() {
             placeholder="Ex: Linha que passa pela região do General Osório"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            minLength="5"
             required
           />
         </div>
@@ -160,10 +214,7 @@ function LinesPage() {
                 <td>{line.name}</td>
                 <td>{line.description}</td>
                 <td>
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEdit(line)}
-                  >
+                  <button className="edit-btn" onClick={() => handleEdit(line)}>
                     Editar
                   </button>
 

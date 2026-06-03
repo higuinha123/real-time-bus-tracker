@@ -51,6 +51,20 @@ function Sidebar({
             >
               🚍 Ônibus
             </button>
+
+            <button
+              className={currentPage === "drivers" ? "active" : ""}
+              onClick={() => setCurrentPage("drivers")}
+            >
+              👨‍✈️ Motoristas
+            </button>
+
+            <button
+               className={currentPage === "stops" ? "active" : ""}
+              onClick={() => setCurrentPage("stops")}
+            >
+              📍 Pontos de Parada
+            </button>
           </>
         )}
       </nav>
