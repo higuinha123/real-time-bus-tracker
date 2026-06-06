@@ -36,6 +36,7 @@ model Bus {
   occupancy         String   @default("Normal")
   nextStop          String
   operationalStatus String   @default("Em operação")
+  lastUpdate        DateTime?
   createdAt         DateTime @default(now())
 
   lineId            Int

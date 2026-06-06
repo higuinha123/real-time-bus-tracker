@@ -9,6 +9,8 @@ import BusesPage from "./pages/BusesPage";
 import DashboardPage from "./pages/DashboardPage";
 import DriversPage from "./pages/DriversPage";
 import StopsPage from "./pages/StopsPage";
+import MonitoringPage from "./pages/MonitoringPage";
+import HistoryPage from "./pages/HistoryPage";
 import "./App.css";
 
 function App() {
@@ -126,6 +128,9 @@ function App() {
         {currentPage === "drivers" && <DriversPage />}
 
         {currentPage === "stops" && <StopsPage />}
+
+        {currentPage === "monitoring" && <MonitoringPage />}
+        {currentPage === "history" && <HistoryPage />}
       </main>
     </div>
   );

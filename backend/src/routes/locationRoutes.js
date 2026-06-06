@@ -15,6 +15,7 @@ function formatBus(bus) {
     occupancy: bus.occupancy,
     nextStop: bus.nextStop,
     operationalStatus: bus.operationalStatus,
+    lastUpdate: bus.lastUpdate,
     driver: bus.driver,
     busLine: bus.line
   };
@@ -51,7 +52,8 @@ function createLocationRoutes(io) {
           lat: Number(lat),
           lng: Number(lng),
           occupancy: occupancy || bus.occupancy,
-          nextStop: nextStop || bus.nextStop
+          nextStop: nextStop || bus.nextStop,
+          lastUpdate: new Date()
         },
         include: {
           line: true,

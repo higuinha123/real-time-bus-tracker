@@ -34,6 +34,7 @@ function formatBus(bus) {
     occupancy: bus.occupancy,
     nextStop: bus.nextStop,
     operationalStatus: bus.operationalStatus,
+    lastUpdate: bus.lastUpdate,
     driver: bus.driver,
     busLine: bus.line
   };
@@ -158,7 +159,8 @@ router.post("/", authMiddleware, adminMiddleware, async (req, res) => {
         lng: Number(lng),
         occupancy,
         nextStop: nextStop.trim(),
-        operationalStatus: operationalStatus || "Em operação"
+        operationalStatus: operationalStatus || "Em operação",
+        lastUpdate: null
       },
       include: {
         line: true,

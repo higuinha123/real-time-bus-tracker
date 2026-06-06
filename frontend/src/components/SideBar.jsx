@@ -9,68 +9,110 @@ function Sidebar({
 }) {
   const lines = ["Todas", ...new Set(buses.map((bus) => bus.line))];
 
+  const menuItems = [
+    {
+      id: "dashboard",
+      label: "Painel",
+      icon: "📊",
+      adminOnly: true
+    },
+    {
+      id: "monitoring",
+      label: "Monitoramento",
+      icon: "📡",
+      adminOnly: true
+    },
+    {
+      id: "map",
+      label: "Mapa",
+      icon: "🗺️",
+      adminOnly: false
+    },
+    {
+      id: "lines",
+      label: "Linhas",
+      icon: "🧭",
+      adminOnly: true
+    },
+    {
+      id: "buses",
+      label: "Ônibus",
+      icon: "🚍",
+      adminOnly: true
+    },
+    {
+      id: "drivers",
+      label: "Motoristas",
+      icon: "👨‍✈️",
+      adminOnly: true
+    },
+    {
+      id: "stops",
+      label: "Pontos",
+      icon: "📍",
+      adminOnly: true
+    },
+
+    {
+        id: "history",
+        label: "Histórico",
+        icon: "🛣️",
+       adminOnly: true
+    },
+  ];
+
+  const visibleMenuItems = menuItems.filter((item) => {
+    if (item.adminOnly && user.role !== "admin") return false;
+    return true;
+  });
+
   return (
     <aside className="sidebar">
-      <h2>🚌 Bus Tracker</h2>
+      <div className="sidebar-brand">
+        <div className="brand-icon">🚌</div>
+
+        <div className="brand-text">
+          <h2>Bus Tracker</h2>
+          <span>Painel de mobilidade</span>
+        </div>
+      </div>
 
       <div className="user-box">
-        <strong>{user.name}</strong>
-        <p>{user.role === "admin" ? "Administrador" : "Usuário comum"}</p>
-        <button onClick={onLogout}>Sair da conta</button>
+        <div className="user-profile">
+          <div className="user-avatar">
+            {user.name ? user.name.charAt(0).toUpperCase() : "U"}
+          </div>
+
+          <div className="user-info">
+            <strong>{user.name}</strong>
+            <p>{user.role === "admin" ? "Administrador" : "Usuário comum"}</p>
+          </div>
+        </div>
+
+        <button className="logout-btn" onClick={onLogout}>
+          Sair da conta
+        </button>
       </div>
 
       <nav className="sidebar-menu">
-        {user.role === "admin" && (
+        {visibleMenuItems.map((item) => (
           <button
-            className={currentPage === "dashboard" ? "active" : ""}
-            onClick={() => setCurrentPage("dashboard")}
+            key={item.id}
+            className={currentPage === item.id ? "active" : ""}
+            onClick={() => setCurrentPage(item.id)}
           >
-            📊 Dashboard
+            <span className="menu-icon">{item.icon}</span>
+            <span>{item.label}</span>
           </button>
-        )}
-
-        <button
-          className={currentPage === "map" ? "active" : ""}
-          onClick={() => setCurrentPage("map")}
-        >
-          🗺️ Mapa em tempo real
-        </button>
-
-        {user.role === "admin" && (
-          <>
-            <button
-              className={currentPage === "lines" ? "active" : ""}
-              onClick={() => setCurrentPage("lines")}
-            >
-              🧭 Linhas
-            </button>
-
-            <button
-              className={currentPage === "buses" ? "active" : ""}
-              onClick={() => setCurrentPage("buses")}
-            >
-              🚍 Ônibus
-            </button>
-
-            <button
-              className={currentPage === "drivers" ? "active" : ""}
-              onClick={() => setCurrentPage("drivers")}
-            >
-              👨‍✈️ Motoristas
-            </button>
-
-            <button
-               className={currentPage === "stops" ? "active" : ""}
-              onClick={() => setCurrentPage("stops")}
-            >
-              📍 Pontos de Parada
-            </button>
-          </>
-        )}
+        ))}
       </nav>
 
       {currentPage === "map" && (
-        <>
+        <section className="sidebar-panel">
+          <div className="sidebar-section-title">
+            <span>Filtros</span>
+          </div>
+
           <label>Filtrar por linha</label>
 
           <select
@@ -84,19 +126,43 @@ function Sidebar({
             ))}
           </select>
 
-          <h3>Ônibus ativos</h3>
+          <div className="sidebar-section-title">
+            <span>Ônibus ativos</span>
+            <small>{buses.length}</small>
+          </div>
 
-          {buses.length === 0 && <p>Nenhum ônibus ativo no momento.</p>}
+          {buses.length === 0 && (
+            <p className="sidebar-empty">Nenhum ônibus ativo no momento.</p>
+          )}
 
-          {buses.map((bus) => (
-            <div className="bus-card" key={bus.id}>
-              <strong>{bus.line}</strong>
-              <p>Placa: {bus.plate}</p>
-              <p>Lotação: {bus.occupancy}</p>
-              <p>Próxima parada: {bus.nextStop}</p>
-            </div>
-          ))}
-        </>
+          <div className="sidebar-bus-list">
+            {buses.map((bus) => (
+              <div className="bus-card" key={bus.id}>
+                <div className="bus-card-header">
+                  <strong>{bus.line}</strong>
+
+                  <span
+                    className={`mini-badge ${
+                      bus.occupancy ? bus.occupancy.toLowerCase() : "normal"
+                    }`}
+                  >
+                    {bus.occupancy}
+                  </span>
+                </div>
+
+                <p>
+                  <span>Placa</span>
+                  {bus.plate}
+                </p>
+
+                <p>
+                  <span>Próxima parada</span>
+                  {bus.nextStop}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       )}
     </aside>
   );

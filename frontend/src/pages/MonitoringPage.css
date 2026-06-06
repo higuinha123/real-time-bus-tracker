@@ -1,0 +1,281 @@
+.monitoring-page {
+  padding: var(--space-7);
+  background: transparent;
+  min-height: 100vh;
+  padding-bottom: 70px;
+}
+
+.monitoring-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.monitoring-header h1 {
+  color: var(--text-main);
+  font-size: var(--text-2xl);
+  margin-bottom: 6px;
+  letter-spacing: -0.9px;
+}
+
+.monitoring-header p {
+  color: var(--text-muted);
+  font-size: var(--text-md);
+}
+
+.refresh-btn {
+  padding: 13px 17px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  transition: var(--transition-default);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.25);
+}
+
+.refresh-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.98);
+}
+
+.monitoring-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.92);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  backdrop-filter: blur(12px);
+}
+
+.summary-card span {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.summary-card strong {
+  color: var(--text-main);
+  font-size: 34px;
+  letter-spacing: -1px;
+}
+
+.monitoring-content {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.monitoring-map-card,
+.monitoring-list-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.monitoring-map-card {
+  overflow: hidden;
+}
+
+.map-card-header {
+  padding: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: center;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.map-card-header h2,
+.monitoring-list-card h2 {
+  color: var(--text-main);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.map-card-header p {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.map-card-header select {
+  min-width: 250px;
+  padding: 12px 13px;
+  border-radius: var(--radius-md);
+  border: 1px solid #d1d5db;
+  outline: none;
+}
+
+.monitoring-map-wrapper {
+  height: 620px;
+}
+
+.monitoring-map-wrapper .map {
+  width: 100%;
+  height: 100%;
+}
+
+.monitoring-list-card {
+  padding: var(--space-5);
+  max-height: 700px;
+  overflow-y: auto;
+}
+
+.bus-monitoring-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.monitoring-bus-card {
+  width: 100%;
+  text-align: left;
+  background: var(--bg-surface-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.monitoring-bus-card:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.monitoring-bus-card.selected {
+  background: #dbeafe;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-soft);
+}
+
+.bus-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.bus-card-top strong {
+  color: var(--text-main);
+  font-size: 17px;
+}
+
+.monitoring-bus-card p {
+  color: #475569;
+  font-weight: 800;
+  margin-bottom: var(--space-3);
+}
+
+.online-badge {
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 900;
+}
+
+.online-badge.online {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.online-badge.offline {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.bus-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.bus-info-grid span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 800;
+}
+
+.bus-info-grid strong {
+  color: var(--text-main);
+  font-size: var(--text-sm);
+  margin-bottom: 5px;
+}
+
+.clear-selection-btn {
+  width: 100%;
+  margin-top: var(--space-4);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: #64748b;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.clear-selection-btn:hover {
+  background: #475569;
+  transform: translateY(-1px);
+}
+
+.empty-text {
+  color: var(--text-muted);
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 1150px) {
+  .monitoring-content {
+    grid-template-columns: 1fr;
+  }
+
+  .monitoring-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .monitoring-list-card {
+    max-height: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .monitoring-page {
+    padding: var(--space-4);
+  }
+
+  .monitoring-header,
+  .map-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .monitoring-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .map-card-header select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .monitoring-map-wrapper {
+    height: 460px;
+  }
+}

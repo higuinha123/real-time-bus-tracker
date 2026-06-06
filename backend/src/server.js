@@ -10,8 +10,11 @@ const busRoutes = require("./routes/busRoutes");
 const lineRoutes = require("./routes/lineRoutes");
 const driverRoutes = require("./routes/driverRoutes");
 const stopRoutes = require("./routes/stopRoutes");
+const historyRoutes = require("./routes/historyRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 const createSimulationRoutes = require("./routes/simulationRoutes");
 const createLocationRoutes = require("./routes/locationRoutes");
+
 
 const app = express();
 const server = http.createServer(app);
@@ -38,6 +41,7 @@ function formatBus(bus) {
     occupancy: bus.occupancy,
     nextStop: bus.nextStop,
     operationalStatus: bus.operationalStatus,
+    lastUpdate: bus.lastUpdate,
     driver: bus.driver,
     busLine: bus.line
   };
@@ -48,6 +52,8 @@ app.use("/api/buses", busRoutes);
 app.use("/api/lines", lineRoutes);
 app.use("/api/drivers", driverRoutes);
 app.use("/api/stops", stopRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/history", historyRoutes);
 app.use("/api/simulation", createSimulationRoutes(io));
 app.use("/api/location", createLocationRoutes(io));
 
