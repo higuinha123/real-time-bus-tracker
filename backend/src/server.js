@@ -14,6 +14,7 @@ const historyRoutes = require("./routes/historyRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const createSimulationRoutes = require("./routes/simulationRoutes");
 const createLocationRoutes = require("./routes/locationRoutes");
+const cardRoutes = require("./routes/cardRoutes");
 
 
 const app = express();
@@ -56,6 +57,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/history", historyRoutes);
 app.use("/api/simulation", createSimulationRoutes(io));
 app.use("/api/location", createLocationRoutes(io));
+app.use("/api/cards", cardRoutes);
 
 app.get("/", (req, res) => {
   res.send("API do Bus Tracker funcionando!");

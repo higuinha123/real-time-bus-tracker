@@ -11,6 +11,7 @@ import DriversPage from "./pages/DriversPage";
 import StopsPage from "./pages/StopsPage";
 import MonitoringPage from "./pages/MonitoringPage";
 import HistoryPage from "./pages/HistoryPage";
+import UserHomePage from "./pages/UserHomePage";
 import "./App.css";
 
 function App() {
@@ -92,6 +93,10 @@ function App() {
   if (!user) {
     return <Login onLogin={setUser} />;
   }
+
+  if (user.role !== "admin") {
+  return <UserHomePage user={user} onLogout={handleLogout} />;
+}
 
   const filteredBuses =
     selectedLine === "Todas"

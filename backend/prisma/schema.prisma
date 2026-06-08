@@ -14,6 +14,8 @@ model User {
   password  String
   role      String   @default("user")
   createdAt DateTime @default(now())
+
+  cards TransportCard[]
 }
 
 model BusLine {
@@ -79,4 +81,29 @@ model LocationHistory {
 
   busId     Int
   bus       Bus      @relation(fields: [busId], references: [id])
+}
+
+model TransportCard {
+  id         Int      @id @default(autoincrement())
+  cardNumber String  @unique
+  type       String  @default("COMMON")
+  balance    Float   @default(0)
+  status     String  @default("ACTIVE")
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  type        String
+  amount      Float
+  description String
+  createdAt   DateTime @default(now())
+
+  cardId      Int
+  card        TransportCard @relation(fields: [cardId], references: [id])
 }
